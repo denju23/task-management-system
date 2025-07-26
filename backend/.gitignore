@@ -1,0 +1,15 @@
+# dependencies
+/node_modules
+
+# dotenv
+.env
+
+# logs
+logs/
+*.log
+
+# system
+.DS_Store
+
+# temp
+temp/

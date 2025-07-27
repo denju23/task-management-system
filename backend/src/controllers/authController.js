@@ -13,6 +13,23 @@ export const login = asyncHandler(async (req, res) => {
   sendTokenResponse(user, 200, res);
 });
 
+
+export const handleGoogleLogin = asyncHandler(async (req, res) => {
+  const { token } = req.body;
+
+  if (!token) {
+    return res.status(400).json({ error: 'Token is required' });
+  }
+
+  const user = await authService.googleLogin(token);
+
+  if (!user) {
+    return res.status(401).json({ error: 'Google login failed' });
+  }
+
+  sendTokenResponse(user, 200, res);
+});
+
 export const getMe = asyncHandler(async (req, res) => {
   const user = await authService.getCurrentUser(req.user._id);
   res.status(200).json({ success: true, user });

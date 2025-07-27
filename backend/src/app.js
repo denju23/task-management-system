@@ -22,7 +22,11 @@ const BASE_URL = '/api/v1'; // ✅ Define your base API path here
 // Middlewares
 app.use(express.json());
 app.use(helmet());
-app.use(cors());
+// app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:3000',
+  credentials: true, // only if using cookies
+}));
 app.use(mongoSanitize());             // sanitize req.body, req.query, req.params
 app.use(xssClean());                  // sanitize user input against XSS
 app.use(morgan('dev'));

@@ -13,7 +13,7 @@ import authorizeRoles from '../middlewares/roleMiddleware.js';
 const router = express.Router();
 
 // 👨‍💼 Manager creates task
-router.post('/', authenticate, authorizeRoles('manager'), createTask);
+router.post('/', authenticate, authorizeRoles('admin','manager'), createTask);
 
 // 🧑‍💼 All users view tasks for project
 router.get('/:projectId', authenticate, getProjectTasks);
@@ -27,7 +27,7 @@ router.delete('/:taskId', authenticate, authorizeRoles('manager'), deleteTask);
 router.patch(
   '/batch',
   authenticate,
-  authorizeRoles('manager'),
+  authorizeRoles('manager','admin'),
   batchUpdateTasks
 );
 

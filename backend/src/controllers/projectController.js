@@ -7,6 +7,9 @@ export const createProject = asyncHandler(async (req, res) => {
 });
 
 export const getProjects = asyncHandler(async (req, res) => {
-  const projects = await projectService.getAllProjects();
-  res.status(200).json({ success: true, projects });
+  const { page, limit, search, status } = req.query;
+
+  const result = await projectService.getAllProjects({ page, limit, search, status });
+
+  res.status(200).json({ success: true, ...result });
 });

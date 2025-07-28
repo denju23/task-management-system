@@ -81,3 +81,17 @@ export const batchUpdateTasks = asyncHandler(async (req, res) => {
     modifiedCount: result.modifiedCount ?? result.nModified // nModified for older mongoose
   });
 });
+
+
+
+// Get all overdue tasks
+export const getOverdueTasks = asyncHandler(async (req, res) => {
+  const currentDate = new Date();
+
+  const overdueTasks = await Task.find({
+    dueDate: { $lt: currentDate },
+    status: { $ne: 'completed' }, // optional: only incomplete tasks
+  });
+
+  res.status(200).json({ success: true, overdueTasks });
+});

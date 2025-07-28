@@ -2,6 +2,18 @@ import Task from '../models/Task.js';
 import ApiError from '../utils/ApiError.js';
 
 export const createTask = async (data, userId) => {
+  const { dueDate } = data;
+
+  // Strip time from current date and due date
+  const today = new Date();
+  today.setHours(0, 0, 0, 0); // make today 00:00:00
+
+  const due = new Date(dueDate);
+  due.setHours(0, 0, 0, 0); // make dueDate 00:00:00
+
+  if (due < today) {
+    throw new ApiError(400, 'Due date cannot be in the past');
+  }
   return await Task.create({ ...data, createdBy: userId });
 };
 
